@@ -46,7 +46,7 @@ namespace ExamCenterFinder.Api.Application.Services
                 }));
 
                 // Filter by distance
-                return examCenterDtos.Where(av => av.DistanceMiles <= distance).ToList();
+                return examCenterDtos.Where(av => av.DistanceMiles <= distance).OrderBy(av => av.DistanceMiles).ToList();
 
             }
             catch (Exception ex)
