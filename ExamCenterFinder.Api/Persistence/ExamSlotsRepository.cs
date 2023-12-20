@@ -12,9 +12,14 @@ namespace ExamCenterFinder.Api.Persistence
             _context = context;
         }
 
+        /// <summary>
+        /// Get list of slots by duaration and free capacity
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <returns> </returns>
         public async Task<IList<ExamSlot>> GetSlotsByDurationAsync(int duration)
         {
-            return await _context.ExamSlots.Include(x => x.ExamCenter).ThenInclude(x => x.ZipCodeCenterPoint).Where(es => es.Duration == duration).ToListAsync();
+            return await _context.ExamSlots.Include(x => x.ExamCenter).ThenInclude(x => x.ZipCodeCenterPoint).Where(es => es.Duration == duration && es.TotalSeats > es.ReservedSeats).ToListAsync();
         }
     }
 }

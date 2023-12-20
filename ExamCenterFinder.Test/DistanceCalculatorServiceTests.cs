@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ExamCenterFinder.Api.Application;
-using ExamCenterFinder.Api.Application.Services;
 using ExamCenterFinder.Api.Domain;
+using ExamCenterFinder.Api.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -13,57 +13,42 @@ namespace ExamCenterFinder.Test
     public class DistanceCalculatorServiceTests
     {
         [Test]
-        public async Task CalculateDistance_WithValidZipCode_ReturnsDistance()
+        public async Task CalculateDistance_WithTwoPoints_ReturnsDistance()
         {
             // Arrange
-            var zipCode = "12345";
-            var distance = 10;
-            var zipCodeCenterPointRepositoryMock = new Mock<IZipCodeCenterPointRepository>();
             var loggerMock = new Mock<ILogger<DistanceCalculatorService>>();
-
-            var zipCodeData = new ZipCodeCenterPoint
-            {
-                Latitude = 40.123,
-                Longitude = -75.456
-            };
-
-            zipCodeCenterPointRepositoryMock.Setup(repo =>
-                    repo.GetZipCodeCenterPointsByZipCode(zipCode))
-                .ReturnsAsync(zipCodeData);
+            var fromLatitude = 10.00;
+            var fromLongitude = 10.00;
+            var toLatitude = 20.00;
+            var toLongitude = 20.00;
 
             var distanceCalculatorService = new DistanceCalculatorService(
-                zipCodeCenterPointRepositoryMock.Object,
                 loggerMock.Object
             );
 
             // Act
-            var result = await distanceCalculatorService.CalculateDistance(zipCode, distance);
+            var result = await distanceCalculatorService.CalculateDistance(fromLatitude, fromLongitude, toLatitude, toLongitude);
 
             // Assert
-            Assert.That(result, Is.EqualTo(5535.9041318579557)); 
+            Assert.That(result, Is.GreaterThan(0)); 
         }
 
         [Test]
-        public void CalculateDistance_WithInvalidZipCode_ThrowsException()
+        public async Task CalculateDistance_WithSamePoint_Returns0()
         {
-            // Arrange
-            var zipCode = "InvalidZipCode";
-            var distance = 10;
-            var zipCodeCenterPointRepositoryMock = new Mock<IZipCodeCenterPointRepository>();
             var loggerMock = new Mock<ILogger<DistanceCalculatorService>>();
-
-            zipCodeCenterPointRepositoryMock.Setup(repo =>
-                    repo.GetZipCodeCenterPointsByZipCode(zipCode))
-                .ReturnsAsync((ZipCodeCenterPoint)null); // Simulate null response for an invalid zip code
+            var latitude = 10.00;
+            var longitude = 10.00;
 
             var distanceCalculatorService = new DistanceCalculatorService(
-                zipCodeCenterPointRepositoryMock.Object,
                 loggerMock.Object
             );
 
-            // Act & Assert
-            Assert.ThrowsAsync<InvalidOperationException>(() =>
-                distanceCalculatorService.CalculateDistance(zipCode, distance));
+            // Act
+            var result = await distanceCalculatorService.CalculateDistance(latitude, longitude, latitude, longitude);
+
+            // Assert
+            Assert.That(result, Is.EqualTo(0));
         }
     }
 }

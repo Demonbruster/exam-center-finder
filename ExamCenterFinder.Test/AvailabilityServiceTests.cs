@@ -16,7 +16,7 @@ namespace ExamCenterFinder.Test
     public class AvailabilityServiceTests
     {
         [Test]
-        public async Task GetAvailableExamCenters_ReturnsListOfExamCenterDto()
+        public async Task GetAvailableExamCenters_WithValidInput_ReturnsAvaliablities()
         {
             // Arrange
             var examDuration = 2;
@@ -24,7 +24,10 @@ namespace ExamCenterFinder.Test
             var distance = 10;
             var distanceCalculatorServiceMock = new Mock<IDistanceCalculatorService>();
             var examSlotsRepositoryMock = new Mock<IExamSlotsRepository>();
+            var zipCodeRepositoryMock = new Mock<IZipCodeCenterPointRepository>();
             var loggerMock = new Mock<ILogger<AvailabilityService>>();
+
+            var zipCodeObj = new ZipCodeCenterPoint { Id = 1, ZipCode = "11111", Latitude = 45.22738570006638, Longitude = -93.9960240952021 };
 
             var expectedExamSlots = new List<ExamSlot>
             {
@@ -50,18 +53,24 @@ namespace ExamCenterFinder.Test
             };
 
             distanceCalculatorServiceMock.Setup(service =>
-                    service.CalculateDistance(zipCode, distance))
+                    service.CalculateDistance(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()))
                 .ReturnsAsync(5.0);
 
             examSlotsRepositoryMock.Setup(repo =>
                     repo.GetSlotsByDurationAsync(examDuration))
                 .ReturnsAsync(expectedExamSlots);
 
+            zipCodeRepositoryMock.Setup(repo =>
+            repo.GetZipCodeCenterPointsByZipCode(zipCode))
+                .ReturnsAsync(zipCodeObj);
+
             var availabilityService = new AvailabilityService(
+                zipCodeRepositoryMock.Object,
                 distanceCalculatorServiceMock.Object,
                 examSlotsRepositoryMock.Object,
                 loggerMock.Object
             );
+
 
             // Act
             var result = await availabilityService.GetAvailalbleExamCenters(examDuration, zipCode, distance);

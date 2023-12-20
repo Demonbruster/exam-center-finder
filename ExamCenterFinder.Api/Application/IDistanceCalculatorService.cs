@@ -2,6 +2,6 @@
 {
     public interface IDistanceCalculatorService
     {
-        Task<double> CalculateDistance(string zipCode, int distance);
+        Task<double> CalculateDistance(double fromLatitude, double fromLogitude, double toLatitude, double toLongitude);
     }
 }

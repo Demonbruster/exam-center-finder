@@ -1,12 +1,12 @@
 using ExamCenterFinder.Api.Application;
 using ExamCenterFinder.Api.Application.Services;
+using ExamCenterFinder.Api.Infrastructure;
 using ExamCenterFinder.Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ExamCenterFinderDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddTransient<IExamCenterRepository, ExamCenterRepository>();
 builder.Services.AddTransient<IExamSlotsRepository, ExamSlotsRepository>();
 builder.Services.AddTransient<IZipCodeCenterPointRepository, ZipCodeCenterPointRepository>();
 builder.Services.AddTransient<IDistanceCalculatorService, DistanceCalculatorService>();

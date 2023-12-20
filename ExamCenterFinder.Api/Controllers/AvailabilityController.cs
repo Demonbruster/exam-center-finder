@@ -26,6 +26,11 @@ namespace ExamCenterFinder.Api.Controllers
 
                 var availabilities = await _availabilityService.GetAvailalbleExamCenters(examDuration, zipCode, distance);
 
+                if (availabilities != null && availabilities.Count == 0) 
+                { 
+                    return NotFound("There no available centers matching the request");
+                }
+
                 return Ok(new AvailablitiesDto
                 {
                     Availability = availabilities
@@ -39,7 +44,7 @@ namespace ExamCenterFinder.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"An error occurred: {ex.Message}");
-                return StatusCode(500, "An error occurred while processing the request.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing the request.");
             }
         }
 

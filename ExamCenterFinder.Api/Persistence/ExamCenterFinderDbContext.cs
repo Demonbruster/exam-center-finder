@@ -36,7 +36,13 @@ namespace ExamCenterFinder.Api.Persistence
             modelBuilder.Entity<ZipCodeCenterPoint>().HasData(
                 new ZipCodeCenterPoint { Id = 1, ZipCode = "11111", Latitude = 45.22738570006638, Longitude = -93.9960240952021 },
                 new ZipCodeCenterPoint { Id = 2, ZipCode = "22222", Latitude = 45.56189444715879, Longitude = -93.22693539547762 },
-                new ZipCodeCenterPoint { Id = 3, ZipCode = "33333", Latitude = 44.84908604562181, Longitude = -92.23998199472152 }
+                new ZipCodeCenterPoint { Id = 3, ZipCode = "33333", Latitude = 44.84908604562181, Longitude = -92.23998199472152 },
+                new ZipCodeCenterPoint { Id = 4, ZipCode = "44444", Latitude = 46.84908604562181, Longitude = -96.23998199472152 },
+                new ZipCodeCenterPoint { Id = 5, ZipCode = "55555", Latitude = 47.84908604562181, Longitude = -97.23998199472152 },
+                new ZipCodeCenterPoint { Id = 6, ZipCode = "66666", Latitude = 48.84908604562181, Longitude = -98.23998199472152 },
+                new ZipCodeCenterPoint { Id = 7, ZipCode = "77777", Latitude = 49.84908604562181, Longitude = -99.23998199472152 },
+                new ZipCodeCenterPoint { Id = 8, ZipCode = "88888", Latitude = 50.84908604562181, Longitude = -91.23998199472152 },
+                new ZipCodeCenterPoint { Id = 9, ZipCode = "99999", Latitude = 30.84908604562181, Longitude = -90.23998199472152 }
             );
 
             // Seed ExamCenters and ExamSlots
