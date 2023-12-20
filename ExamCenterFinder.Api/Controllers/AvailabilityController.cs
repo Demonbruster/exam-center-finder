@@ -10,26 +10,26 @@ namespace ExamCenterFinder.Api.Controllers
     {
         private readonly ILogger<AvailabilityController> _logger;
         private readonly IAvailabilityService _availabilityService;
+
         public AvailabilityController(ILogger<AvailabilityController> logger, IAvailabilityService availabilityService ) 
         {
             _logger = logger;
             _availabilityService = availabilityService;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAvailability([FromQuery] int examDuration, [FromQuery] string zipCode, [FromQuery] int distanceInMiles)
         {
             try
             {
                 var validationError = ValidateInputParameters(examDuration, zipCode, distanceInMiles);
-                if (validationError != null)
+                if (!String.IsNullOrEmpty(validationError))
                     return BadRequest(validationError);
 
-                var availabilities = await _availabilityService.GetAvailalbleExamCenters(examDuration, zipCode, distanceInMiles);
+                var availabilities = await _availabilityService.GetAvailalbleExamCentersAsync(examDuration, zipCode, distanceInMiles);
 
-                if (availabilities != null && availabilities.Count == 0) 
-                { 
+                if (availabilities == null || availabilities.Count == 0) 
                     return NotFound("There no available centers matching the request");
-                }
 
                 return Ok(new AvailablitiesDto
                 {
@@ -59,7 +59,7 @@ namespace ExamCenterFinder.Api.Controllers
             if (distance <= 0)
                 return "Invalid input parameter: distance must be a positive value.";
 
-            return null;
+            return String.Empty;
         }
     }
 }

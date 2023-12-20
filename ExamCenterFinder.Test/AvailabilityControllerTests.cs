@@ -20,7 +20,7 @@ namespace ExamCenterFinder.Test
             var mockZipCodeRepo = new Mock<IZipCodeCenterPointRepository>();
             var logger = new Mock<ILogger<AvailabilityController>>();
             mockAvailabilityService.Setup(service =>
-                    service.GetAvailalbleExamCenters(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()))
+                    service.GetAvailalbleExamCentersAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()))
                 .ThrowsAsync(new Exception("Test exception"));
 
             var controller = new AvailabilityController(logger.Object, mockAvailabilityService.Object);
@@ -75,7 +75,7 @@ namespace ExamCenterFinder.Test
             };
 
             zipCodeCenterPointRepositoryMock.Setup(repo =>
-                    repo.GetZipCodeCenterPointsByZipCode(zipCode))
+                    repo.GetZipCodeCenterPointsByZipCodeAsync(zipCode))
                 .ReturnsAsync(zipCodeDetails);
 
             var availabilityData = new List<ExamCenterDto>
@@ -95,7 +95,7 @@ namespace ExamCenterFinder.Test
             };
 
             availabilityServiceMock.Setup(service =>
-                    service.GetAvailalbleExamCenters(examDuration, zipCode, distance))
+                    service.GetAvailalbleExamCentersAsync(examDuration, zipCode, distance))
                 .ReturnsAsync(availabilityData);
 
             // Act
@@ -119,7 +119,7 @@ namespace ExamCenterFinder.Test
 
             // Assume the service returns an empty list when no centers are available
             availabilityServiceMock.Setup(service =>
-                service.GetAvailalbleExamCenters(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()))
+                service.GetAvailalbleExamCentersAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()))
                 .ReturnsAsync(new List<ExamCenterDto>());
 
             var controller = new AvailabilityController(loggerMock.Object, availabilityServiceMock.Object);

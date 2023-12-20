@@ -53,7 +53,7 @@ namespace ExamCenterFinder.Test
             };
 
             distanceCalculatorServiceMock.Setup(service =>
-                    service.CalculateDistance(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()))
+                    service.CalculateDistanceAsync(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()))
                 .ReturnsAsync(5.0);
 
             examSlotsRepositoryMock.Setup(repo =>
@@ -61,7 +61,7 @@ namespace ExamCenterFinder.Test
                 .ReturnsAsync(expectedExamSlots);
 
             zipCodeRepositoryMock.Setup(repo =>
-            repo.GetZipCodeCenterPointsByZipCode(zipCode))
+            repo.GetZipCodeCenterPointsByZipCodeAsync(zipCode))
                 .ReturnsAsync(zipCodeObj);
 
             var availabilityService = new AvailabilityService(
@@ -73,7 +73,7 @@ namespace ExamCenterFinder.Test
 
 
             // Act
-            var result = await availabilityService.GetAvailalbleExamCenters(examDuration, zipCode, distance);
+            var result = await availabilityService.GetAvailalbleExamCentersAsync(examDuration, zipCode, distance);
 
             // Assert
             Assert.That(result, Is.Not.Null);
@@ -96,7 +96,7 @@ namespace ExamCenterFinder.Test
             var loggerMock = new Mock<ILogger<AvailabilityService>>();
 
             zipCodeRepositoryMock.Setup(repo =>
-                    repo.GetZipCodeCenterPointsByZipCode(zipCode))
+                    repo.GetZipCodeCenterPointsByZipCodeAsync(zipCode))
                 .ThrowsAsync(new InvalidOperationException("Test exception"));
 
             var availabilityService = new AvailabilityService(
@@ -108,7 +108,7 @@ namespace ExamCenterFinder.Test
 
             // Act & Assert
             var exception = Assert.ThrowsAsync<InvalidOperationException>(async () =>
-                await availabilityService.GetAvailalbleExamCenters(examDuration, zipCode, distance));
+                await availabilityService.GetAvailalbleExamCentersAsync(examDuration, zipCode, distance));
 
             Assert.That(exception.Message, Is.EqualTo("Test exception"));
         }

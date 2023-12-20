@@ -12,7 +12,7 @@ namespace ExamCenterFinder.Api.Persistence
             _context = context;
         }
 
-        public async Task<ZipCodeCenterPoint> GetZipCodeCenterPointsByZipCode(string zipCode)
+        public async Task<ZipCodeCenterPoint> GetZipCodeCenterPointsByZipCodeAsync(string zipCode)
         {
             return await _context.ZipCodeCenterPoints.Where(ec => ec.ZipCode == zipCode).FirstOrDefaultAsync();
         }

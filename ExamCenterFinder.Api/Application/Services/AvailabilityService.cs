@@ -16,16 +16,19 @@ namespace ExamCenterFinder.Api.Application.Services
             _examSlotsRepository = examSlotsRepository;
             _logger = logger;
         }
-        public async Task<IList<ExamCenterDto>> GetAvailalbleExamCenters(int examDuration, string zipCode, int distance)
+
+        public async Task<IList<ExamCenterDto>> GetAvailalbleExamCentersAsync(int examDuration, string zipCode, int distance)
         {
             try
             {
-                var userZipCodeCenterpoint = await _zipCodeCenterPointRepository.GetZipCodeCenterPointsByZipCode(zipCode);
-                if (userZipCodeCenterpoint == null) throw InvalidOperationException("ZipCode data not found");
+                var userZipCodeCenterpoint = await _zipCodeCenterPointRepository.GetZipCodeCenterPointsByZipCodeAsync(zipCode);
+                if (userZipCodeCenterpoint == null) 
+                    throw InvalidOperationException("ZipCode data not found");
+
                 var examSlots = await _examSlotsRepository.GetSlotsByDurationAsync(examDuration);
                 var examCenterDtos = await Task.WhenAll(examSlots.Select(async es =>
                 {
-                    var distanceMiles = await _distanceCalculatorService.CalculateDistance(
+                    var distanceMiles = await _distanceCalculatorService.CalculateDistanceAsync(
                         userZipCodeCenterpoint.Latitude,
                         userZipCodeCenterpoint.Longitude,
                         es.ExamCenter.ZipCodeCenterPoint.Latitude,

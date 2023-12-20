@@ -27,7 +27,7 @@ namespace ExamCenterFinder.Test
             );
 
             // Act
-            var result = await distanceCalculatorService.CalculateDistance(fromLatitude, fromLongitude, toLatitude, toLongitude);
+            var result = await distanceCalculatorService.CalculateDistanceAsync(fromLatitude, fromLongitude, toLatitude, toLongitude);
 
             // Assert
             Assert.That(result, Is.GreaterThan(0)); 
@@ -45,7 +45,7 @@ namespace ExamCenterFinder.Test
             );
 
             // Act
-            var result = await distanceCalculatorService.CalculateDistance(latitude, longitude, latitude, longitude);
+            var result = await distanceCalculatorService.CalculateDistanceAsync(latitude, longitude, latitude, longitude);
 
             // Assert
             Assert.That(result, Is.EqualTo(0));

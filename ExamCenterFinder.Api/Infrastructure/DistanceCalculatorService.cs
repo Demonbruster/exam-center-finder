@@ -18,7 +18,7 @@ namespace ExamCenterFinder.Api.Infrastructure
         /// <param name="toLatitude"></param>
         /// <param name="toLongitude"></param>
         /// <returns>current distance in miles</returns>
-        public async Task<double> CalculateDistance(double fromLatitude, double fromLogitude, double toLatitude, double toLongitude)
+        public async Task<double> CalculateDistanceAsync(double fromLatitude, double fromLogitude, double toLatitude, double toLongitude)
         {
             try
             {

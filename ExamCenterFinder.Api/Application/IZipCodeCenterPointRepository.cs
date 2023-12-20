@@ -9,6 +9,6 @@ namespace ExamCenterFinder.Api.Application
         /// </summary>
         /// <param name="zipCode"></param>
         /// <returns></returns>
-        Task<ZipCodeCenterPoint> GetZipCodeCenterPointsByZipCode(string zipCode);
+        Task<ZipCodeCenterPoint> GetZipCodeCenterPointsByZipCodeAsync(string zipCode);
     }
 }
