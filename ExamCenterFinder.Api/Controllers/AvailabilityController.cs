@@ -31,6 +31,11 @@ namespace ExamCenterFinder.Api.Controllers
                     Availability = availabilities
                 });
             }
+            catch (InvalidOperationException ioe)
+            {
+                _logger.LogWarning($"An error occurred: {ioe.Message}");
+                return BadRequest(ioe.Message);
+            }
             catch (Exception ex)
             {
                 _logger.LogError($"An error occurred: {ex.Message}");
