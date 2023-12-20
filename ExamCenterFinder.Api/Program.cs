@@ -1,5 +1,8 @@
-var builder = WebApplication.CreateBuilder(args);
+using ExamCenterFinder.Api.Persistence;
+using Microsoft.EntityFrameworkCore;
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ExamCenterFinderDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Add services to the container.
 
 builder.Services.AddControllers();
