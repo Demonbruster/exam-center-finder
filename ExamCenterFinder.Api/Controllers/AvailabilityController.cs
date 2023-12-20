@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ExamCenterFinder.Api.Application;
+using ExamCenterFinder.Api.Domain.Dtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ExamCenterFinder.Api.Controllers
 {
@@ -7,9 +9,11 @@ namespace ExamCenterFinder.Api.Controllers
     public class AvailabilityController : ControllerBase
     {
         private readonly ILogger<AvailabilityController> _logger;
-        public AvailabilityController(ILogger<AvailabilityController> logger ) 
+        private readonly IAvailabilityService _availabilityService;
+        public AvailabilityController(ILogger<AvailabilityController> logger, IAvailabilityService availabilityService ) 
         {
             _logger = logger;
+            _availabilityService = availabilityService;
         }
         [HttpGet]
         public async Task<IActionResult> GetAvailability([FromQuery] int examDuration, [FromQuery] string zipCode, [FromQuery] int distance)
@@ -20,7 +24,12 @@ namespace ExamCenterFinder.Api.Controllers
                 if (validationError != null)
                     return BadRequest(validationError);
 
-                return Ok();
+                var availabilities = await _availabilityService.GetAvailalbleExamCenters(examDuration, zipCode, distance);
+
+                return Ok(new AvailablitiesDto
+                {
+                    Availability = availabilities
+                });
             }
             catch (Exception ex)
             {

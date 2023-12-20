@@ -1,4 +1,5 @@
 using ExamCenterFinder.Api.Application;
+using ExamCenterFinder.Api.Application.Services;
 using ExamCenterFinder.Api.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,8 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<IExamCenterRepository, ExamCenterRepository>();
 builder.Services.AddTransient<IExamSlotsRepository, ExamSlotsRepository>();
 builder.Services.AddTransient<IZipCodeCenterPointRepository, ZipCodeCenterPointRepository>();
+builder.Services.AddTransient<IDistanceCalculatorService, DistanceCalculatorService>();
+builder.Services.AddTransient<IAvailabilityService, AvailabilityService>();
 
 // Add services to the container.
 

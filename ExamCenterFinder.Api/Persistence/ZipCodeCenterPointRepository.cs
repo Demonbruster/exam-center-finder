@@ -14,13 +14,7 @@ namespace ExamCenterFinder.Api.Persistence
 
         public async Task<ZipCodeCenterPoint> GetZipCodeCenterPointsByZipCode(string zipCode)
         {
-            var result = await _context.ZipCodeCenterPoints.Where(ec => ec.ZipCode == zipCode).FirstOrDefaultAsync();
-            if (result == null)
-            {
-                var errorMessage = $"Zip code not found: {zipCode}";
-                throw new InvalidOperationException(errorMessage);
-            }
-            return result;
+            return await _context.ZipCodeCenterPoints.Where(ec => ec.ZipCode == zipCode).FirstOrDefaultAsync();
         }
     }
 }
