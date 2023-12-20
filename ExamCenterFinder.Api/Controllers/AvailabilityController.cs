@@ -16,15 +16,15 @@ namespace ExamCenterFinder.Api.Controllers
             _availabilityService = availabilityService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAvailability([FromQuery] int examDuration, [FromQuery] string zipCode, [FromQuery] int distance)
+        public async Task<IActionResult> GetAvailability([FromQuery] int examDuration, [FromQuery] string zipCode, [FromQuery] int distanceInMiles)
         {
             try
             {
-                var validationError = ValidateInputParameters(examDuration, zipCode, distance);
+                var validationError = ValidateInputParameters(examDuration, zipCode, distanceInMiles);
                 if (validationError != null)
                     return BadRequest(validationError);
 
-                var availabilities = await _availabilityService.GetAvailalbleExamCenters(examDuration, zipCode, distance);
+                var availabilities = await _availabilityService.GetAvailalbleExamCenters(examDuration, zipCode, distanceInMiles);
 
                 if (availabilities != null && availabilities.Count == 0) 
                 { 
