@@ -5,6 +5,10 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCenterFinder.Api", "ExamCenterFinder.Api\ExamCenterFinder.Api.csproj", "{C170B674-F0DD-4265-9F47-5CA7AAB2E5B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamCenterFinder.Test", "ExamCenterFinder.Test\ExamCenterFinder.Test.csproj", "{960CBC95-BCE2-4EF8-BEF7-53A2504332C0}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{05CF9CEC-378C-49D4-88DB-E54505829FDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{C170B674-F0DD-4265-9F47-5CA7AAB2E5B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C170B674-F0DD-4265-9F47-5CA7AAB2E5B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C170B674-F0DD-4265-9F47-5CA7AAB2E5B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{960CBC95-BCE2-4EF8-BEF7-53A2504332C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{960CBC95-BCE2-4EF8-BEF7-53A2504332C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{960CBC95-BCE2-4EF8-BEF7-53A2504332C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{960CBC95-BCE2-4EF8-BEF7-53A2504332C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05CF9CEC-378C-49D4-88DB-E54505829FDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CF9CEC-378C-49D4-88DB-E54505829FDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CF9CEC-378C-49D4-88DB-E54505829FDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CF9CEC-378C-49D4-88DB-E54505829FDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
