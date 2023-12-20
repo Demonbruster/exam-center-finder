@@ -110,5 +110,28 @@ namespace ExamCenterFinder.Test
             Assert.That(model.Availability, Is.EqualTo(availabilityData));
         }
 
+        [Test]
+        public async Task GetAvailability_Returns_NotFound_WhenNoCentersAvailable()
+        {
+            // Arrange
+            var loggerMock = new Mock<ILogger<AvailabilityController>>();
+            var availabilityServiceMock = new Mock<IAvailabilityService>();
+
+            // Assume the service returns an empty list when no centers are available
+            availabilityServiceMock.Setup(service =>
+                service.GetAvailalbleExamCenters(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>()))
+                .ReturnsAsync(new List<ExamCenterDto>());
+
+            var controller = new AvailabilityController(loggerMock.Object, availabilityServiceMock.Object);
+
+            // Act
+            var result = await controller.GetAvailability(2, "12345", 10);
+
+            // Assert
+            Assert.That(result, Is.TypeOf<NotFoundObjectResult>());
+            var notFoundResult = (NotFoundObjectResult)result;
+            Assert.That(notFoundResult.Value, Is.EqualTo("There no available centers matching the request"));
+        }
+
     }
 }
