@@ -82,5 +82,35 @@ namespace ExamCenterFinder.Test
             Assert.That(examCenterDtos, Is.Not.Empty);
             Assert.That(examCenterDtos.Count, Is.EqualTo(expectedExamSlots.Count));
         }
+
+        [Test]
+        public async Task GetZipcodeException_With_InvalidZipcode()
+        {
+            // Arrange
+            var examDuration = 2;
+            var zipCode = "12345";
+            var distance = 10;
+            var distanceCalculatorServiceMock = new Mock<IDistanceCalculatorService>();
+            var examSlotsRepositoryMock = new Mock<IExamSlotsRepository>();
+            var zipCodeRepositoryMock = new Mock<IZipCodeCenterPointRepository>();
+            var loggerMock = new Mock<ILogger<AvailabilityService>>();
+
+            zipCodeRepositoryMock.Setup(repo =>
+                    repo.GetZipCodeCenterPointsByZipCode(zipCode))
+                .ThrowsAsync(new InvalidOperationException("Test exception"));
+
+            var availabilityService = new AvailabilityService(
+                zipCodeRepositoryMock.Object,
+                distanceCalculatorServiceMock.Object,
+                examSlotsRepositoryMock.Object,
+                loggerMock.Object
+            );
+
+            // Act & Assert
+            var exception = Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                await availabilityService.GetAvailalbleExamCenters(examDuration, zipCode, distance));
+
+            Assert.That(exception.Message, Is.EqualTo("Test exception"));
+        }
     }
 }
