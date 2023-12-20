@@ -12,7 +12,11 @@ builder.Services.AddTransient<IZipCodeCenterPointRepository, ZipCodeCenterPointR
 builder.Services.AddTransient<IDistanceCalculatorService, DistanceCalculatorService>();
 builder.Services.AddTransient<IAvailabilityService, AvailabilityService>();
 
-// Add services to the container.
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.AddConsole(); // You can add other logging providers as needed.
+});
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
